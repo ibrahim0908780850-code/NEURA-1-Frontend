@@ -4,23 +4,65 @@ const API_URL =
 
 export async function sendMessage(message){
 
-const response = await fetch(
-`${API_URL}/api/chat`,
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify({
+  const response = await fetch(
+    `${API_URL}/api/chat`,
+    {
+      method: "POST",
 
-user_id:"guest",
-message:message
+      headers: {
+        "Content-Type": "application/json"
+      },
 
-})
+      body: JSON.stringify({
+
+        user_id: "guest",
+
+        message: message
+
+      })
+
+    }
+  );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      "NEURA API Error"
+    );
+
+  }
+
+
+  const data = await response.json();
+
+
+  return data;
+
 }
-);
 
 
-return await response.json();
+
+export async function getStatus(){
+
+  const response = await fetch(
+    `${API_URL}/api/status`
+  );
+
+
+  return await response.json();
+
+}
+
+
+
+export async function getHealth(){
+
+  const response = await fetch(
+    `${API_URL}/api/health`
+  );
+
+
+  return await response.json();
 
 }
