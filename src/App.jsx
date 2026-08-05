@@ -3,6 +3,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Chat from "./pages/Chat";
 
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+
 
 export default function App(){
 
@@ -10,22 +13,24 @@ return (
 
 <BrowserRouter>
 
-<Routes>
+<Navbar/>
 
+<Routes>
 
 <Route
 path="/"
-element={<Home />}
+element={<Home/>}
 />
-
 
 <Route
 path="/chat"
-element={<Chat />}
+element={<Chat/>}
 />
 
-
 </Routes>
+
+
+<Footer/>
 
 </BrowserRouter>
 
