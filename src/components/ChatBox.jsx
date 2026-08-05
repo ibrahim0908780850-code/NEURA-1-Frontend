@@ -6,6 +6,7 @@ import { sendMessage } from "../services/api";
 export default function ChatBox() {
 
   const [message, setMessage] = useState("");
+
   const [messages, setMessages] = useState([
     {
       role: "ai",
@@ -16,20 +17,21 @@ export default function ChatBox() {
   const [loading, setLoading] = useState(false);
 
 
+
   async function handleSend() {
 
-    if (!message.trim()) return;
+    if (!message.trim() || loading) return;
 
 
-    const userMessage = {
-      role: "user",
-      text: message
-    };
+    const currentMessage = message;
 
 
     setMessages(prev => [
       ...prev,
-      userMessage
+      {
+        role: "user",
+        text: currentMessage
+      }
     ]);
 
 
@@ -37,33 +39,58 @@ export default function ChatBox() {
     setLoading(true);
 
 
+
     try {
 
+
       const data = await sendMessage(
-        message
+        currentMessage
       );
 
 
-      setMessages(prev => [
-        ...prev,
-        {
-          role: "ai",
-          text:
-          data.response ||
-          "لم يتم استلام رد"
+      let aiResponse =
+        "لم يتم استلام رد";
+
+
+      if(data?.response){
+
+        if(typeof data.response === "string"){
+
+          aiResponse = data.response;
+
+        }else{
+
+          aiResponse =
+          data.response.message ||
+          JSON.stringify(data.response);
+
         }
-      ]);
 
+      }
 
-    } catch(error) {
 
       setMessages(prev => [
         ...prev,
         {
           role:"ai",
-          text:"حدث خطأ في الاتصال بالخادم"
+          text:aiResponse
         }
       ]);
+
+
+
+    } catch(error){
+
+
+      setMessages(prev => [
+        ...prev,
+        {
+          role:"ai",
+          text:
+          "حدث خطأ أثناء الاتصال بـ NEURA-1"
+        }
+      ]);
+
 
     }
 
@@ -74,33 +101,52 @@ export default function ChatBox() {
 
 
 
+
   return (
 
-    <div className="
+    <div
+    dir="rtl"
+    className="
     w-full
-    max-w-3xl
+    max-w-4xl
     mx-auto
     bg-slate-900/80
+    backdrop-blur-xl
     border
     border-white/10
     rounded-3xl
     shadow-2xl
     overflow-hidden
-    ">
+    "
+    >
+
 
 
       {/* Header */}
 
-      <div className="
+      <div
+      className="
       p-5
       border-b
       border-white/10
       flex
       items-center
       gap-3
-      ">
+      "
+      >
 
-        <Bot className="text-blue-400"/>
+        <div className="
+        bg-blue-600
+        p-3
+        rounded-xl
+        ">
+
+          <Bot
+          className="text-white"
+          />
+
+        </div>
+
 
         <div>
 
@@ -109,57 +155,78 @@ export default function ChatBox() {
           font-bold
           text-white
           ">
-            NEURA-1
+          NEURA-1
           </h2>
+
 
           <p className="
           text-sm
           text-gray-400
           ">
-            Arabic-first AI System
+          Arabic AI Assistant
           </p>
 
+
         </div>
+
 
       </div>
 
 
 
+
+
       {/* Messages */}
 
-      <div className="
+      <div
+      className="
       h-[450px]
       overflow-y-auto
-      p-5
-      space-y-4
-      ">
+      p-6
+      space-y-5
+      "
+      >
 
 
       {
         messages.map((msg,index)=>(
+
 
           <div
           key={index}
           className={`
           flex
           gap-3
-          ${msg.role==="user"
-          ?"justify-end"
-          :"justify-start"}
+          items-start
+          ${
+          msg.role==="user"
+          ?
+          "justify-start"
+          :
+          "justify-end"
+          }
           `}
           >
 
 
           {
-            msg.role==="ai" &&
-            <Bot className="text-blue-400 mt-2"/>
+          msg.role==="ai" &&
+          <Bot
+          className="
+          text-blue-400
+          mt-2
+          "
+          />
           }
 
 
-          <div className={`
-          max-w-[80%]
+
+          <div
+          className={`
+          max-w-[75%]
           p-4
           rounded-2xl
+          leading-7
           ${
           msg.role==="user"
           ?
@@ -167,33 +234,54 @@ export default function ChatBox() {
           :
           "bg-white/10 text-gray-100"
           }
-          `}>
+          `}
+          >
 
-            {msg.text}
+          {msg.text}
 
           </div>
 
 
+
           {
-            msg.role==="user" &&
-            <User className="text-gray-300 mt-2"/>
+          msg.role==="user" &&
+          <User
+          className="
+          text-gray-300
+          mt-2
+          "
+          />
           }
 
 
           </div>
 
+
         ))
       }
 
 
+
+
       {
-        loading &&
-        <p className="
-        text-gray-400
-        ">
-          NEURA يفكر...
-        </p>
+      loading &&
+
+      <div className="
+      flex
+      items-center
+      gap-2
+      text-gray-400
+      "
+      >
+
+      <Bot size={18}/>
+
+      NEURA يفكر...
+
+      </div>
+
       }
+
 
 
       </div>
@@ -201,15 +289,19 @@ export default function ChatBox() {
 
 
 
+
       {/* Input */}
 
-      <div className="
+
+      <div
+      className="
       p-5
       border-t
       border-white/10
       flex
       gap-3
-      ">
+      "
+      >
 
 
       <input
@@ -220,14 +312,18 @@ export default function ChatBox() {
         e=>setMessage(e.target.value)
       }
 
+
       onKeyDown={
         e=>{
-          if(e.key==="Enter")
-          handleSend();
+          if(e.key==="Enter"){
+            handleSend();
+          }
         }
       }
 
-      placeholder="اكتب رسالتك إلى NEURA..."
+
+      placeholder="اكتب رسالتك إلى NEURA-1..."
+
 
       className="
       flex-1
@@ -235,13 +331,15 @@ export default function ChatBox() {
       border
       border-white/10
       rounded-xl
-      px-4
+      px-5
       py-3
       text-white
       outline-none
+      focus:border-blue-500
       "
 
       />
+
 
 
 
@@ -249,9 +347,14 @@ export default function ChatBox() {
 
       onClick={handleSend}
 
+
+      disabled={loading}
+
+
       className="
       bg-blue-600
       hover:bg-blue-700
+      disabled:opacity-50
       px-5
       rounded-xl
       text-white
@@ -259,9 +362,10 @@ export default function ChatBox() {
 
       >
 
-        <Send size={20}/>
+      <Send size={20}/>
 
       </button>
+
 
 
       </div>
@@ -270,4 +374,5 @@ export default function ChatBox() {
     </div>
 
   );
+
 }
