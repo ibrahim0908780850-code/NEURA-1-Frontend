@@ -1,5 +1,7 @@
 const API_URL =
+import.meta.env.VITE_API_URL ||
 "https://neura-production-fdfa.up.railway.app";
+
 
 
 export async function sendMessage(message){
@@ -36,10 +38,10 @@ export async function sendMessage(message){
 
   const data = await response.json();
 
-
   return data;
 
 }
+
 
 
 
@@ -50,9 +52,19 @@ export async function getStatus(){
   );
 
 
+  if(!response.ok){
+
+    throw new Error(
+      "Status API Error"
+    );
+
+  }
+
+
   return await response.json();
 
 }
+
 
 
 
@@ -61,6 +73,15 @@ export async function getHealth(){
   const response = await fetch(
     `${API_URL}/api/health`
   );
+
+
+  if(!response.ok){
+
+    throw new Error(
+      "Health API Error"
+    );
+
+  }
 
 
   return await response.json();
