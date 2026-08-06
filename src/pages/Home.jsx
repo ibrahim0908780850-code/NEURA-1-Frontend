@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
-import { 
+import {
   Brain,
   Code2,
   Sparkles,
   ShieldCheck,
-  ArrowRight
+  ArrowRight,
+  Database,
+  Cpu,
+  Network
 } from "lucide-react";
 
 
@@ -17,16 +20,34 @@ min-h-screen
 bg-slate-950
 text-white
 overflow-hidden
+relative
 ">
+
+
+{/* Background Glow */}
+
+<div className="
+absolute
+top-0
+left-1/2
+-translate-x-1/2
+w-[700px]
+h-[400px]
+bg-blue-600/20
+blur-[120px]
+rounded-full
+"/>
+
 
 
 {/* Hero */}
 
 <section className="
+relative
 max-w-7xl
 mx-auto
 px-6
-py-24
+py-28
 text-center
 ">
 
@@ -46,17 +67,19 @@ mb-8
 
 <Sparkles 
 className="text-blue-400"
-size={18}
 />
 
 <span className="
 text-sm
 text-gray-300
 ">
-Arabic First AI Cloud System
+
+Arabic First AI Platform
+
 </span>
 
 </div>
+
 
 
 
@@ -64,17 +87,20 @@ Arabic First AI Cloud System
 text-5xl
 md:text-7xl
 font-bold
-leading-tight
 ">
 
 NEURA-1
 
 <span className="
 block
-text-blue-500
+bg-gradient-to-r
+from-blue-400
+to-cyan-400
+text-transparent
+bg-clip-text
 ">
 
-Intelligent AI Platform
+AI Intelligence Layer
 
 </span>
 
@@ -87,12 +113,13 @@ max-w-3xl
 mx-auto
 mt-8
 text-lg
+leading-relaxed
 text-gray-400
 ">
 
-نظام ذكاء اصطناعي عربي متقدم يجمع بين
-الذكاء الاصطناعي، الأتمتة، وتحليل البيانات
-لبناء حلول رقمية ذكية وقابلة للتوسع.
+منصة ذكاء اصطناعي عربية متقدمة تجمع بين
+النماذج الذكية، الذاكرة، الأتمتة، وتحليل البيانات
+لبناء تطبيقات SaaS مستقبلية.
 
 </p>
 
@@ -121,16 +148,16 @@ px-8
 py-4
 rounded-2xl
 font-semibold
+transition
 "
 
 >
 
-ابدأ المحادثة
+ابدأ تجربة NEURA
 
-<ArrowRight size={20}/>
+<ArrowRight/>
 
 </Link>
-
 
 
 <button
@@ -142,11 +169,12 @@ rounded-2xl
 border
 border-white/20
 bg-white/5
+hover:bg-white/10
 "
 
 >
 
-استكشاف النظام
+استكشاف المعمارية
 
 </button>
 
@@ -160,7 +188,7 @@ bg-white/5
 
 
 
-{/* Features */}
+{/* System Modules */}
 
 <section className="
 max-w-6xl
@@ -173,120 +201,47 @@ gap-6
 ">
 
 
-<div className="
-bg-white/5
-border
-border-white/10
-rounded-3xl
-p-8
-">
-
-<Brain
-className="text-blue-400 mb-5"
-/>
-
-<h3 className="
-text-xl
-font-bold
-mb-3
-">
-
-AI Engine
-
-</h3>
-
-
-<p className="
-text-gray-400
-">
-
-محرك ذكاء اصطناعي قادر على
-فهم اللغة العربية ومعالجة الطلبات
-بشكل ذكي.
-
-</p>
-
-</div>
-
-
-
-
-
-<div className="
-bg-white/5
-border
-border-white/10
-rounded-3xl
-p-8
-">
-
-<Code2
-className="text-blue-400 mb-5"
+<Card
+icon={<Brain/>}
+title="AI Core"
+text="محرك ذكاء اصطناعي لفهم اللغة العربية وتشغيل المهام الذكية."
 />
 
 
-<h3 className="
-text-xl
-font-bold
-mb-3
-">
-
-Developer Agent
-
-</h3>
-
-
-<p className="
-text-gray-400
-">
-
-مساعد برمجي لتحليل الأكواد
-وتطوير الحلول التقنية.
-
-</p>
-
-</div>
-
-
-
-
-
-<div className="
-bg-white/5
-border
-border-white/10
-rounded-3xl
-p-8
-">
-
-
-<ShieldCheck
-className="text-blue-400 mb-5"
+<Card
+icon={<Database/>}
+title="AI Memory"
+text="نظام ذاكرة ومعرفة لإدارة السياق والمعلومات."
 />
 
 
-<h3 className="
-text-xl
-font-bold
-mb-3
-">
-
-Secure Architecture
-
-</h3>
+<Card
+icon={<Network/>}
+title="AI Router"
+text="توجيه ذكي بين النماذج والخدمات المختلفة."
+/>
 
 
-<p className="
-text-gray-400
-">
-
-بنية آمنة وقابلة للتوسع
-لإنشاء منتجات SaaS مستقبلية.
-
-</p>
+<Card
+icon={<Code2/>}
+title="Developer Agent"
+text="وكيل برمجي لتحليل الأكواد وإنشاء الحلول."
+/>
 
 
-</div>
+<Card
+icon={<Cpu/>}
+title="Automation"
+text="تشغيل عمليات ذكية وربط الأنظمة الخارجية."
+/>
+
+
+<Card
+icon={<ShieldCheck/>}
+title="Security"
+text="بنية آمنة قابلة للتوسع لمنصات SaaS."
+/>
+
 
 
 </section>
@@ -294,7 +249,8 @@ text-gray-400
 
 
 
-{/* Footer Text */}
+
+{/* Version */}
 
 <section className="
 text-center
@@ -302,11 +258,70 @@ pb-16
 text-gray-500
 ">
 
-NEURA-1 v0.9.0  
+
+NEURA-1 v0.9.0
+
 <br/>
-Arabic-first AI Cloud System
+
+Arabic First AI Cloud Intelligence System
+
 
 </section>
+
+
+
+</div>
+
+)
+
+}
+
+
+
+
+function Card({icon,title,text}){
+
+return (
+
+<div className="
+bg-white/5
+border
+border-white/10
+rounded-3xl
+p-8
+hover:bg-white/10
+transition
+">
+
+<div className="
+text-blue-400
+mb-5
+">
+
+{icon}
+
+</div>
+
+
+<h3 className="
+text-xl
+font-bold
+mb-3
+">
+
+{title}
+
+</h3>
+
+
+<p className="
+text-gray-400
+leading-relaxed
+">
+
+{text}
+
+</p>
 
 
 </div>
