@@ -1,5 +1,11 @@
 import ChatBox from "../components/ChatBox";
-import { Brain, Sparkles, ShieldCheck } from "lucide-react";
+import { 
+  Brain, 
+  Sparkles, 
+  ShieldCheck,
+  Cpu,
+  Database
+} from "lucide-react";
 
 
 export default function Chat(){
@@ -11,8 +17,10 @@ className="
 min-h-screen
 bg-slate-950
 text-white
-px-6
-py-16
+px-4
+sm:px-6
+py-12
+sm:py-16
 relative
 overflow-hidden
 "
@@ -25,10 +33,12 @@ dir="rtl"
 <div
 className="
 absolute
-top-20
-right-20
-w-72
-h-72
+top-10
+right-0
+w-48
+h-48
+sm:w-72
+sm:h-72
 bg-blue-600/20
 rounded-full
 blur-3xl
@@ -39,16 +49,16 @@ blur-3xl
 <div
 className="
 absolute
-bottom-20
-left-20
-w-72
-h-72
+bottom-10
+left-0
+w-48
+h-48
+sm:w-72
+sm:h-72
 bg-purple-600/20
 rounded-full
 blur-3xl
-"
-/>
-
+"/>
 
 
 
@@ -68,7 +78,8 @@ z-10
 <div
 className="
 text-center
-mb-12
+mb-10
+sm:mb-12
 "
 >
 
@@ -77,28 +88,43 @@ mb-12
 className="
 inline-flex
 items-center
-gap-2
+gap-3
 bg-white/10
 border
 border-white/10
 px-5
-py-2
+py-3
 rounded-full
 mb-6
 "
 >
+
+
+<span
+className="
+w-3
+h-3
+bg-green-400
+rounded-full
+animate-pulse
+"
+/>
+
 
 <Sparkles
 size={18}
 className="text-blue-400"
 />
 
-<span className="
+
+<span
+className="
 text-sm
 text-gray-300
-">
+"
+>
 
-NEURA-1 Online
+NEURA-1 Connected
 
 </span>
 
@@ -110,19 +136,24 @@ NEURA-1 Online
 
 <h1
 className="
-text-5xl
+text-4xl
+sm:text-5xl
 md:text-6xl
 font-bold
+leading-tight
 "
 >
 
 تحدث مع
 
-<span className="
-text-blue-500
+
+<span
+className="
 block
 mt-2
-">
+text-blue-500
+"
+>
 
 NEURA-1
 
@@ -137,14 +168,17 @@ NEURA-1
 className="
 mt-5
 text-gray-400
-text-lg
+text-base
+sm:text-lg
 max-w-2xl
 mx-auto
+leading-relaxed
 "
 >
 
 نظام ذكاء اصطناعي عربي متقدم
-للمحادثة، التحليل، والمساعدة التقنية.
+للمحادثة، التحليل، البرمجة،
+والأتمتة الذكية.
 
 </p>
 
@@ -157,9 +191,12 @@ mx-auto
 
 {/* System Cards */}
 
+
 <div
 className="
 grid
+grid-cols-1
+sm:grid-cols-2
 md:grid-cols-3
 gap-4
 mb-10
@@ -167,72 +204,35 @@ mb-10
 >
 
 
-<div
-className="
-bg-white/5
-border
-border-white/10
-rounded-2xl
-p-5
-flex
-items-center
-gap-4
-"
->
-
-<Brain
-className="text-blue-400"
+<Card
+icon={<Brain/>}
+title="AI Engine"
+text="محرك الذكاء الاصطناعي"
 />
 
-<div>
 
-<h3 className="font-bold">
-AI Engine
-</h3>
-
-<p className="text-sm text-gray-400">
-محرك الذكاء الاصطناعي
-</p>
-
-</div>
-
-</div>
-
-
-
-
-<div
-className="
-bg-white/5
-border
-border-white/10
-rounded-2xl
-p-5
-flex
-items-center
-gap-4
-"
->
-
-<ShieldCheck
-className="text-green-400"
+<Card
+icon={<ShieldCheck/>}
+title="Secure API"
+text="Cloud Architecture"
 />
 
-<div>
 
-<h3 className="font-bold">
-Secure
-</h3>
+<Card
+icon={<Sparkles/>}
+title="Version"
+text="NEURA-1 v1.0.0"
+/>
 
-<p className="text-sm text-gray-400">
-Cloud API
-</p>
 
-</div>
 
 </div>
 
 
+
+
+
+{/* System Status */}
 
 
 <div
@@ -240,43 +240,167 @@ className="
 bg-white/5
 border
 border-white/10
-rounded-2xl
+rounded-3xl
 p-5
-flex
-items-center
-gap-4
+mb-10
+grid
+grid-cols-1
+sm:grid-cols-3
+gap-5
 "
 >
 
-<Sparkles
-className="text-purple-400"
+
+<Status
+icon={<Cpu/>}
+title="Engine"
+value="Hybrid AI"
 />
 
-<div>
 
-<h3 className="font-bold">
-Version
-</h3>
+<Status
+icon={<Database/>}
+title="Memory"
+value="Context Ready"
+/>
 
-<p className="text-sm text-gray-400">
-v1.0.0
-</p>
+
+<Status
+icon={<Sparkles/>}
+title="Language"
+value="Arabic First"
+/>
+
+
 
 </div>
 
-</div>
-
-
-</div>
 
 
 
 
 
-{/* Chat */}
+{/* Chat Box */}
+
+<div
+className="
+bg-white/5
+border
+border-white/10
+rounded-3xl
+p-3
+sm:p-5
+"
+>
 
 <ChatBox />
 
+</div>
+
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+
+function Card({icon,title,text}){
+
+return (
+
+<div
+className="
+bg-white/5
+border
+border-white/10
+rounded-2xl
+p-5
+flex
+items-center
+gap-4
+hover:bg-white/10
+transition
+"
+>
+
+<div className="text-blue-400">
+{icon}
+</div>
+
+
+<div>
+
+<h3 className="font-bold">
+{title}
+</h3>
+
+
+<p className="text-sm text-gray-400">
+{text}
+</p>
+
+
+</div>
+
+
+</div>
+
+)
+
+}
+
+
+
+
+
+function Status({icon,title,value}){
+
+return (
+
+<div
+className="
+flex
+items-center
+gap-3
+"
+>
+
+<div
+className="
+text-blue-400
+"
+>
+{icon}
+</div>
+
+
+<div>
+
+<p className="
+text-xs
+text-gray-400
+">
+
+{title}
+
+</p>
+
+
+<p className="
+font-semibold
+">
+
+{value}
+
+</p>
 
 
 </div>
