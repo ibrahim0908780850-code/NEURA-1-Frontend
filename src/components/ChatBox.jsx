@@ -118,7 +118,6 @@ text:"❌ تعذر الاتصال بخادم NEURA-1."
 }
 
 
-
 setLoading(false);
 
 }
@@ -138,10 +137,10 @@ w-full
 max-w-5xl
 mx-auto
 
-h-[calc(100vh-140px)]
+h-[calc(100vh-120px)]
 sm:h-[700px]
 
-bg-slate-900/90
+bg-slate-900/95
 
 border
 border-white/10
@@ -164,7 +163,6 @@ flex-col
 
 {/* Header */}
 
-
 <div
 
 className="
@@ -177,7 +175,7 @@ p-4
 border-b
 border-white/10
 
-bg-slate-900/80
+bg-slate-900
 
 "
 
@@ -188,10 +186,15 @@ bg-slate-900/80
 
 className="
 bg-blue-600
+
 p-3
+
 rounded-xl
+
 shadow-lg
+
 shadow-blue-900/40
+
 "
 
 >
@@ -205,11 +208,13 @@ shadow-blue-900/40
 <div>
 
 <h2
+
 className="
 text-xl
 font-bold
 text-white
 "
+
 >
 
 NEURA-1
@@ -218,10 +223,12 @@ NEURA-1
 
 
 <p
+
 className="
 text-sm
 text-slate-400
 "
+
 >
 
 Arabic AI Assistant
@@ -238,7 +245,10 @@ Arabic AI Assistant
 
 
 
+
+
 {/* Messages */}
+
 
 
 <div
@@ -248,9 +258,10 @@ flex-1
 
 overflow-y-auto
 
-bg-slate-950/80
+bg-slate-950
 
-p-4
+p-3
+sm:p-4
 
 space-y-5
 
@@ -309,7 +320,6 @@ shrink-0
 
 
 
-
 <div
 
 className={`
@@ -331,7 +341,9 @@ break-words
 
 ${
 
+
 msg.role==="user"
+
 
 ?
 
@@ -347,32 +359,37 @@ shadow-blue-900/30
 
 `
 
+
 :
 
 `
 
-bg-slate-800/90
+bg-slate-800
 
-text-slate-100
+text-white
 
 border
 
-border-blue-500/20
+border-white/10
 
 shadow-lg
+
+shadow-black/20
+
+`
+
+
+}
 
 `
 
 }
-
-`}
 
 >
 
 {msg.text}
 
 </div>
-
 
 
 
@@ -447,6 +464,9 @@ NEURA-1 يحلل...
 
 
 
+
+
+
 {/* Input */}
 
 
@@ -455,9 +475,10 @@ NEURA-1 يحلل...
 
 className="
 border-t
+
 border-white/10
 
-bg-slate-900/90
+bg-slate-900
 
 p-4
 
@@ -471,11 +492,13 @@ p-4
 className="
 flex
 items-center
+
 gap-2
 
 "
 
 >
+
 
 
 <input
@@ -505,7 +528,7 @@ className="
 
 flex-1
 
-bg-slate-800/80
+bg-slate-800
 
 border
 
@@ -536,9 +559,12 @@ transition
 
 
 
+
 <button
 
+
 onClick={handleSend}
+
 
 disabled={loading}
 
@@ -583,10 +609,13 @@ shadow-blue-900/30
 
 
 
+
 </div>
 
 
 </div>
+
+
 
 
 
