@@ -1,7 +1,7 @@
 import ChatBox from "../components/ChatBox";
-import { 
-  Brain, 
-  Sparkles, 
+import {
+  Brain,
+  Sparkles,
   ShieldCheck,
   Cpu,
   Database
@@ -13,32 +13,38 @@ export default function Chat(){
 return (
 
 <div
+dir="rtl"
 className="
 min-h-screen
 bg-slate-950
 text-white
+
 px-4
 sm:px-6
-py-12
-sm:py-16
+
+py-8
+sm:py-12
+
 relative
 overflow-hidden
 "
-dir="rtl"
 >
 
 
-{/* Background Glow */}
+{/* Glow */}
 
 <div
 className="
 absolute
-top-10
+top-0
 right-0
-w-48
-h-48
-sm:w-72
-sm:h-72
+
+w-56
+h-56
+
+sm:w-80
+sm:h-80
+
 bg-blue-600/20
 rounded-full
 blur-3xl
@@ -49,16 +55,22 @@ blur-3xl
 <div
 className="
 absolute
-bottom-10
+bottom-0
 left-0
-w-48
-h-48
-sm:w-72
-sm:h-72
+
+w-56
+h-56
+
+sm:w-80
+sm:h-80
+
 bg-purple-600/20
 rounded-full
 blur-3xl
-"/>
+"
+/>
+
+
 
 
 
@@ -73,15 +85,20 @@ z-10
 
 
 
+
+
 {/* Header */}
+
 
 <div
 className="
 text-center
-mb-10
-sm:mb-12
+
+mb-8
+sm:mb-10
 "
 >
+
 
 
 <div
@@ -89,13 +106,18 @@ className="
 inline-flex
 items-center
 gap-3
+
 bg-white/10
+
 border
 border-white/10
+
 px-5
-py-3
+py-2.5
+
 rounded-full
-mb-6
+
+mb-5
 "
 >
 
@@ -104,8 +126,11 @@ mb-6
 className="
 w-3
 h-3
+
 bg-green-400
+
 rounded-full
+
 animate-pulse
 "
 />
@@ -124,7 +149,7 @@ text-gray-300
 "
 >
 
-NEURA-1 Connected
+NEURA-1 Online
 
 </span>
 
@@ -134,25 +159,33 @@ NEURA-1 Connected
 
 
 
+
+
 <h1
+
 className="
 text-4xl
 sm:text-5xl
 md:text-6xl
+
 font-bold
+
 leading-tight
 "
+
 >
 
 تحدث مع
 
 
 <span
+
 className="
 block
 mt-2
 text-blue-500
 "
+
 >
 
 NEURA-1
@@ -164,16 +197,25 @@ NEURA-1
 
 
 
+
+
 <p
+
 className="
-mt-5
+mt-4
+
 text-gray-400
+
 text-base
 sm:text-lg
+
 max-w-2xl
+
 mx-auto
+
 leading-relaxed
 "
+
 >
 
 نظام ذكاء اصطناعي عربي متقدم
@@ -189,26 +231,35 @@ leading-relaxed
 
 
 
-{/* System Cards */}
+
+
+
+{/* Cards */}
+
 
 
 <div
+
 className="
 grid
+
 grid-cols-1
-sm:grid-cols-2
-md:grid-cols-3
+sm:grid-cols-3
+
 gap-4
-mb-10
+
+mb-8
 "
+
 >
 
 
 <Card
 icon={<Brain/>}
 title="AI Engine"
-text="محرك الذكاء الاصطناعي"
+text="Hybrid Intelligence"
 />
+
 
 
 <Card
@@ -216,6 +267,7 @@ icon={<ShieldCheck/>}
 title="Secure API"
 text="Cloud Architecture"
 />
+
 
 
 <Card
@@ -232,23 +284,38 @@ text="NEURA-1 v1.0.0"
 
 
 
-{/* System Status */}
+
+
+
+{/* Status */}
+
 
 
 <div
+
 className="
-bg-white/5
+bg-slate-900/70
+
 border
 border-white/10
+
 rounded-3xl
+
 p-5
-mb-10
+
+mb-8
+
 grid
+
 grid-cols-1
 sm:grid-cols-3
+
 gap-5
+
 "
+
 >
+
 
 
 <Status
@@ -258,11 +325,13 @@ value="Hybrid AI"
 />
 
 
+
 <Status
 icon={<Database/>}
 title="Memory"
 value="Context Ready"
 />
+
 
 
 <Status
@@ -280,22 +349,36 @@ value="Arabic First"
 
 
 
-{/* Chat Box */}
+
+{/* Chat Container */}
+
+
 
 <div
+
 className="
-bg-white/5
+bg-slate-900/50
+
 border
+
 border-white/10
+
 rounded-3xl
-p-3
-sm:p-5
+
+p-2
+sm:p-4
+
+shadow-2xl
+
 "
+
 >
 
-<ChatBox />
+<ChatBox/>
 
 </div>
+
+
 
 
 
@@ -307,6 +390,7 @@ sm:p-5
 )
 
 }
+
 
 
 
@@ -314,37 +398,72 @@ sm:p-5
 
 function Card({icon,title,text}){
 
+
 return (
 
 <div
+
 className="
 bg-white/5
+
 border
 border-white/10
+
 rounded-2xl
+
 p-5
+
 flex
+
 items-center
+
 gap-4
+
 hover:bg-white/10
+
 transition
+
+"
+
+>
+
+
+<div
+className="
+text-blue-400
 "
 >
 
-<div className="text-blue-400">
 {icon}
+
 </div>
+
 
 
 <div>
 
-<h3 className="font-bold">
+
+<h3
+className="
+font-bold
+"
+>
+
 {title}
+
 </h3>
 
 
-<p className="text-sm text-gray-400">
+
+<p
+className="
+text-sm
+text-gray-400
+"
+>
+
 {text}
+
 </p>
 
 
@@ -352,6 +471,7 @@ transition
 
 
 </div>
+
 
 )
 
@@ -361,42 +481,56 @@ transition
 
 
 
+
 function Status({icon,title,value}){
+
 
 return (
 
 <div
+
 className="
 flex
 items-center
 gap-3
 "
+
 >
+
 
 <div
 className="
 text-blue-400
 "
 >
+
 {icon}
+
 </div>
+
 
 
 <div>
 
-<p className="
+
+<p
+className="
 text-xs
 text-gray-400
-">
+"
+>
 
 {title}
 
 </p>
 
 
-<p className="
+
+<p
+className="
 font-semibold
-">
+"
+>
 
 {value}
 
@@ -407,6 +541,7 @@ font-semibold
 
 
 </div>
+
 
 )
 
