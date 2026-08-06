@@ -1,378 +1,230 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Send, Bot, User } from "lucide-react";
 import { sendMessage } from "../services/api";
 
-
 export default function ChatBox() {
-
   const [message, setMessage] = useState("");
 
   const [messages, setMessages] = useState([
     {
       role: "ai",
-      text: "مرحباً، أنا NEURA-1. كيف يمكنني مساعدتك؟"
-    }
+      text: "مرحباً، أنا NEURA-1. كيف يمكنني مساعدتك؟",
+    },
   ]);
 
   const [loading, setLoading] = useState(false);
 
+  const messagesEndRef = useRef(null);
 
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+  }, [messages, loading]);
 
   async function handleSend() {
-
     if (!message.trim() || loading) return;
-
 
     const currentMessage = message;
 
-
-    setMessages(prev => [
+    setMessages((prev) => [
       ...prev,
       {
         role: "user",
-        text: currentMessage
-      }
+        text: currentMessage,
+      },
     ]);
-
 
     setMessage("");
     setLoading(true);
 
-
-
     try {
+      const data = await sendMessage(currentMessage);
 
+      let aiResponse = "تعذر الحصول على رد.";
 
-      const data = await sendMessage(
-        currentMessage
-      );
-
-
-      let aiResponse =
-        "لم يتم استلام رد";
-
-
-      if(data?.response){
-
-        if(typeof data.response === "string"){
-
-          aiResponse = data.response;
-
-        }else{
-
-          aiResponse =
-          data.response.message ||
-          JSON.stringify(data.response);
-
-        }
-
+      if (typeof data?.response === "string") {
+        aiResponse = data.response;
+      } else if (data?.response?.response) {
+        aiResponse = data.response.response;
+      } else if (data?.response?.message) {
+        aiResponse = data.response.message;
+      } else if (data?.response?.error) {
+        aiResponse =
+          "⚠️ حدث خطأ في نموذج الذكاء الاصطناعي.";
       }
 
-
-      setMessages(prev => [
+      setMessages((prev) => [
         ...prev,
         {
-          role:"ai",
-          text:aiResponse
-        }
+          role: "ai",
+          text: aiResponse,
+        },
       ]);
-
-
-
-    } catch(error){
-
-
-      setMessages(prev => [
+    } catch (err) {
+      setMessages((prev) => [
         ...prev,
         {
-          role:"ai",
-          text:
-          "حدث خطأ أثناء الاتصال بـ NEURA-1"
-        }
+          role: "ai",
+          text: "❌ تعذر الاتصال بخادم NEURA-1.",
+        },
       ]);
-
-
     }
 
-
     setLoading(false);
-
   }
 
-
-
-
   return (
-
     <div
-    dir="rtl"
-    className="
-    w-full
-    max-w-4xl
-    mx-auto
-    bg-slate-900/80
-    backdrop-blur-xl
-    border
-    border-white/10
-    rounded-3xl
-    shadow-2xl
-    overflow-hidden
-    "
+      dir="rtl"
+      className="
+      w-full
+      max-w-5xl
+      mx-auto
+      h-[calc(100vh-140px)]
+      sm:h-[700px]
+      bg-slate-900
+      border
+      border-slate-700
+      rounded-none
+      sm:rounded-3xl
+      overflow-hidden
+      shadow-2xl
+      flex
+      flex-col
+      "
     >
-
-
-
       {/* Header */}
 
-      <div
-      className="
-      p-5
-      border-b
-      border-white/10
-      flex
-      items-center
-      gap-3
-      "
-      >
+      <div className="flex items-center gap-3 p-4 border-b border-slate-700 bg-slate-900">
 
-        <div className="
-        bg-blue-600
-        p-3
-        rounded-xl
-        ">
-
-          <Bot
-          className="text-white"
-          />
-
+        <div className="bg-blue-600 p-3 rounded-xl">
+          <Bot className="text-white" />
         </div>
-
 
         <div>
-
-          <h2 className="
-          text-xl
-          font-bold
-          text-white
-          ">
-          NEURA-1
+          <h2 className="text-xl font-bold text-white">
+            NEURA-1
           </h2>
 
-
-          <p className="
-          text-sm
-          text-gray-400
-          ">
-          Arabic AI Assistant
+          <p className="text-sm text-slate-400">
+            Arabic AI Assistant
           </p>
-
-
         </div>
 
-
       </div>
-
-
-
-
 
       {/* Messages */}
 
       <div
-      className="
-      h-[450px]
-      overflow-y-auto
-      p-6
-      space-y-5
-      "
+        className="
+        flex-1
+        overflow-y-auto
+        bg-slate-950
+        p-4
+        space-y-4
+        "
       >
-
-
-      {
-        messages.map((msg,index)=>(
-
-
+        {messages.map((msg, index) => (
           <div
-          key={index}
-          className={`
-          flex
-          gap-3
-          items-start
-          ${
-          msg.role==="user"
-          ?
-          "justify-start"
-          :
-          "justify-end"
-          }
-          `}
+            key={index}
+            className={`flex gap-2 items-start ${
+              msg.role === "user"
+                ? "justify-start"
+                : "justify-end"
+            }`}
           >
+            {msg.role === "ai" && (
+              <Bot className="text-blue-400 mt-1 shrink-0" />
+            )}
 
+            <div
+              className={`
+              max-w-[90%]
+              sm:max-w-[75%]
+              p-4
+              rounded-2xl
+              leading-7
+              whitespace-pre-wrap
+              break-words
+              ${
+                msg.role === "user"
+                  ? "bg-blue-600 text-white"
+                  : "bg-slate-800 text-white border border-slate-700"
+              }
+              `}
+            >
+              {msg.text}
+            </div>
 
-          {
-          msg.role==="ai" &&
-          <Bot
-          className="
-          text-blue-400
-          mt-2
-          "
-          />
-          }
-
-
-
-          <div
-          className={`
-          max-w-[75%]
-          p-4
-          rounded-2xl
-          leading-7
-          ${
-          msg.role==="user"
-          ?
-          "bg-blue-600 text-white"
-          :
-          "bg-white/10 text-gray-100"
-          }
-          `}
-          >
-
-          {msg.text}
-
+            {msg.role === "user" && (
+              <User className="text-slate-300 mt-1 shrink-0" />
+            )}
           </div>
+        ))}
 
-
-
-          {
-          msg.role==="user" &&
-          <User
-          className="
-          text-gray-300
-          mt-2
-          "
-          />
-          }
-
-
+        {loading && (
+          <div className="flex items-center gap-2 text-slate-400">
+            <Bot size={18} />
+            NEURA-1 يفكر...
           </div>
+        )}
 
-
-        ))
-      }
-
-
-
-
-      {
-      loading &&
-
-      <div className="
-      flex
-      items-center
-      gap-2
-      text-gray-400
-      "
-      >
-
-      <Bot size={18}/>
-
-      NEURA يفكر...
-
+        <div ref={messagesEndRef} />
       </div>
-
-      }
-
-
-
-      </div>
-
-
-
-
 
       {/* Input */}
 
+      <div className="border-t border-slate-700 bg-slate-900 p-4">
 
-      <div
-      className="
-      p-5
-      border-t
-      border-white/10
-      flex
-      gap-3
-      "
-      >
+        <div className="flex items-center gap-2">
 
+          <input
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSend();
+              }
+            }}
+            placeholder="اكتب رسالتك إلى NEURA-1..."
+            className="
+            flex-1
+            bg-slate-800
+            border
+            border-slate-700
+            rounded-xl
+            px-4
+            py-3
+            text-white
+            placeholder:text-slate-400
+            outline-none
+            focus:border-blue-500
+            "
+          />
 
-      <input
+          <button
+            onClick={handleSend}
+            disabled={loading}
+            className="
+            w-12
+            h-12
+            rounded-xl
+            bg-blue-600
+            hover:bg-blue-700
+            disabled:opacity-50
+            flex
+            items-center
+            justify-center
+            text-white
+            "
+          >
+            <Send size={20} />
+          </button>
 
-      value={message}
-
-      onChange={
-        e=>setMessage(e.target.value)
-      }
-
-
-      onKeyDown={
-        e=>{
-          if(e.key==="Enter"){
-            handleSend();
-          }
-        }
-      }
-
-
-      placeholder="اكتب رسالتك إلى NEURA-1..."
-
-
-      className="
-      flex-1
-      bg-black/30
-      border
-      border-white/10
-      rounded-xl
-      px-5
-      py-3
-      text-white
-      outline-none
-      focus:border-blue-500
-      "
-
-      />
-
-
-
-
-      <button
-
-      onClick={handleSend}
-
-
-      disabled={loading}
-
-
-      className="
-      bg-blue-600
-      hover:bg-blue-700
-      disabled:opacity-50
-      px-5
-      rounded-xl
-      text-white
-      "
-
-      >
-
-      <Send size={20}/>
-
-      </button>
-
-
+        </div>
 
       </div>
-
-
     </div>
-
   );
-
 }
